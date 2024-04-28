@@ -8,7 +8,7 @@ in polynomial time. This document outlines our approach using parallel computing
 
 ## Step 1: Tool Selection
 
-We chose Python for its rich ecosystem suitable for numerical computations and data visualization. The following libraries were selected:
+I chose Python for its rich ecosystem suitable for numerical computations and data visualization. The following libraries were selected:
 
 - `NumPy`: For efficient numerical computations.
 - `Pandas`: For structured data manipulation (not used in the current script but useful for handling larger datasets).
@@ -18,7 +18,7 @@ We chose Python for its rich ecosystem suitable for numerical computations and d
 
 ## Step 2: Data Setup and Clustering
 
-We created a synthetic dataset representing cities with random coordinates. Then, we applied the k-means clustering algorithm to group the cities based on their geographic proximity.
+I created a synthetic dataset representing cities with random coordinates. Then, I applied the k-means clustering algorithm to group the cities based on their geographic proximity.
 
 ```python
 from sklearn.cluster import KMeans
@@ -52,14 +52,13 @@ def nearest_neighbor_tour(coordinates):
 ```
 
 ## Step 5: Iteration and Refinement
-We defined a process for iterating and refining the TSP solutions:
-
-Refinement of the clustering algorithm's parameters.
-Optimization of the routes within each cluster using techniques like 2-opt or 3-opt.
-Development of an integration strategy to combine the cluster solutions into a single route.
+I defined a process for iterating and refining the TSP solutions:
+    1. Refinement of the clustering algorithm's parameters.
+    2. Optimization of the routes within each cluster using techniques like 2-opt or 3-opt.
+    3. Development of an integration strategy to combine the cluster solutions into a single route.
 
 ## Step 6: Convergence Criteria
-To ensure our iterative process converges on an optimal or near-optimal solution, we established convergence criteria based on improvement thresholds 
+To ensure our iterative process converges on an optimal or near-optimal solution, I established convergence criteria based on improvement thresholds 
 and iteration limits.
 
 ```python
