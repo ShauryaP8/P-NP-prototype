@@ -96,7 +96,7 @@ within the TSP.
 
 ## Contribution to Proving P = NP
 This development is a step toward creating a polynomial-time solution for an NP-complete problem. By attempting to optimize the TSP solution process and 
-seeking efficiency improvements, we aim to contribute to the broader discussion and efforts in the computational complexity community regarding the P vs NP question.
+seeking efficiency improvements, I aim to contribute to the broader discussion and efforts in the computational complexity community regarding the P vs NP question.
 
 The approach taken—breaking down a complex problem into simpler, manageable parts and solving them in parallel—mirrors strategies that might be used to tackle 
 other NP-complete problems. If scalable to larger instances and proven to be efficient across the board, this method could suggest that P = NP by providing a 
