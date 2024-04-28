@@ -53,6 +53,7 @@ def nearest_neighbor_tour(coordinates):
 
 ## Step 5: Iteration and Refinement
 I defined a process for iterating and refining the TSP solutions:
+
     1. Refinement of the clustering algorithm's parameters.
     2. Optimization of the routes within each cluster using techniques like 2-opt or 3-opt.
     3. Development of an integration strategy to combine the cluster solutions into a single route.
