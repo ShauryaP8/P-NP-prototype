@@ -31,9 +31,7 @@ clusters = kmeans.fit_predict(coordinates)
 
 ## Step 3: Visualizing Clustering Results
 A scatter plot was generated to visualize the clustering of cities:
-
-![Geographical Clustering of Cities](P-NP-prototype/Geographical%20clustering%20graph.png)
-
+![Geograpical clustering graph](https://github.com/ShauryaP8/P-NP-prototype/assets/143507334/f4a46595-f87f-408e-92de-6966fc1ab824)
 
 The plot shows cities represented as points in a 2D plane, with the x and y coordinates denoting their geographic location.
 Different colors indicate different clusters, suggesting a successful partitioning of the dataset into smaller regions for easier management in the TSP.
