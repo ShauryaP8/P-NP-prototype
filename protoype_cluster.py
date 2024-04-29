@@ -92,7 +92,8 @@ def main():
     # Visualize the global optimized tour
     plt.figure(figsize=(10, 8))
     global_tour_coords = coordinates[global_tour]
-    plt.plot(global_tour_coords[:, 0], global_tour_coords[:, 1], 'o-')
+    plt.plot(global_tour_coords[:, 0], global_tour_coords[:, 1], 'o-')  # Plot the tour
+    plt.plot(global_tour_coords[0, 0], global_tour_coords[0, 1], 'ro')  # Highlight starting point
     plt.title('Global Optimized Tour')
     plt.xlabel('X Coordinate')
     plt.ylabel('Y Coordinate')
