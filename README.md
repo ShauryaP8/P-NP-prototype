@@ -13,7 +13,7 @@ I chose Python for its rich ecosystem suitable for numerical computations and da
 - `NumPy`: For efficient numerical computations.
 - `Pandas`: For structured data manipulation (not used in the current script but useful for handling larger datasets).
 - `Scikit-learn`: To implement machine learning algorithms like k-means clustering.
-- `NetworkX`: For graph-based operations.
+- `NetworkX`: For graph-based operations.(Ommited from updated code as it is not nesscearily needed see more in [Updates](UPDATES.md)
 - `Matplotlib`: For creating visualizations of the data and clusters.
 
 ## Step 2: Data Setup and Clustering
@@ -32,6 +32,9 @@ clusters = kmeans.fit_predict(coordinates)
 ## Step 3: Visualizing Clustering Results
 A scatter plot was generated to visualize the clustering of cities:
 ![Geograpical clustering graph](https://github.com/ShauryaP8/P-NP-prototype/assets/143507334/f4a46595-f87f-408e-92de-6966fc1ab824)
+
+Here another example:
+![Geograpical clustering graph(test2)](https://github.com/ShauryaP8/P-NP-prototype/assets/143507334/7d862152-38c3-4b29-8e9a-6c3b5272813f)
 
 The plot shows cities represented as points in a 2D plane, with the x and y coordinates denoting their geographic location.
 Different colors indicate different clusters, suggesting a successful partitioning of the dataset into smaller regions for easier management in the TSP.
@@ -94,6 +97,11 @@ Tour distance: 1.5588247286556984
 ```
 These results are consistent with expectations for the nearest neighbor heuristic, indicating the algorithm's effectiveness for small to medium-sized clusters 
 within the TSP.
+
+## Global Optimized Tour Visualization
+The global optimized tour after connecting the cluster tours and applying a 2-opt optimization:
+![Global Optimized tour](https://github.com/ShauryaP8/P-NP-prototype/assets/143507334/c9bc56f3-9932-45cc-8285-6909dcdc4a42)
+This visualization shows the entire route after optimizations, providing insight into the efficiency of the algorithm.
 
 ## Contribution to Proving P = NP
 This development is a step toward creating a polynomial-time solution for an NP-complete problem. By attempting to optimize the TSP solution process and 
