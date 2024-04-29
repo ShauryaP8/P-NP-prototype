@@ -1,23 +1,16 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
-import networkx as nx
 
 def create_dataset(num_cities):
     """Generate synthetic dataset of cities with random coordinates."""
-    coordinates = np.random.rand(num_cities, 2)  # 2D coordinates for the cities
-    return coordinates
+    return np.random.rand(num_cities, 2)  # 2D coordinates for the cities
 
 def apply_kmeans(coordinates, n_clusters):
     """Apply K-means clustering to partition the cities."""
     kmeans = KMeans(n_clusters=n_clusters)
     clusters = kmeans.fit_predict(coordinates)
     return clusters, kmeans
-
-def create_geometric_graph(num_nodes, radius):
-    """Create a random geometric graph based on node proximity."""
-    G = nx.random_geometric_graph(num_nodes, radius)
-    return G
 
 def visualize_clusters(coordinates, clusters):
     """Visualize the results of clustering."""
@@ -30,11 +23,12 @@ def visualize_clusters(coordinates, clusters):
     plt.grid(True)
     plt.show()
 
-# TSP solution using the nearest neighbor heuristic
 def calculate_distance(city1, city2):
-    return np.sqrt((city2[0] - city1[0]) ** 2 + (city2[1] - city1[1]) ** 2)
+    """Calculate Euclidean distance between two cities."""
+    return np.linalg.norm(city2 - city1)
 
 def nearest_neighbor_tour(coordinates):
+    """Create a tour using the nearest neighbor heuristic."""
     unvisited = set(range(len(coordinates)))
     tour = [unvisited.pop()]
     while unvisited:
@@ -44,10 +38,37 @@ def nearest_neighbor_tour(coordinates):
         unvisited.remove(nearest_city)
     return tour
 
+def two_opt(tour, coordinates):
+    """Refine tour using the 2-opt algorithm."""
+    improved = True
+    while improved:
+        improved = False
+        for i in range(1, len(tour) - 2):
+            for j in range(i + 1, len(tour)):
+                if j - i == 1: continue  # Skip adjacent edges
+                new_distance = calculate_distance(coordinates[tour[i - 1]], coordinates[tour[j]]) + \
+                               calculate_distance(coordinates[tour[i]], coordinates[tour[j + 1]])
+                old_distance = calculate_distance(coordinates[tour[i - 1]], coordinates[tour[i]]) + \
+                               calculate_distance(coordinates[tour[j]], coordinates[tour[j + 1]])
+                if new_distance < old_distance:
+                    tour[i:j] = tour[i:j][::-1]
+                    improved = True
+    return tour
+
+def connect_clusters(clustered_tours, coordinates):
+    """Connect cluster tours using nearest neighbor between cluster endpoints."""
+    global_tour = list(clustered_tours[0])  # Start with the first cluster's tour
+    for current_cluster in range(1, len(clustered_tours)):
+        last_point = global_tour[-1]
+        next_point = clustered_tours[current_cluster][0]
+        global_tour += clustered_tours[current_cluster]
+
+    # Apply 2-opt to the global tour
+    return two_opt(global_tour, coordinates)
+
 def main():
     num_cities = 100  # Number of cities
-    n_clusters = 5   # Number of clusters for K-means
-    radius = 0.125   # Radius for geometric graph connectivity
+    n_clusters = 5    # Number of clusters for K-means
 
     # Create synthetic data
     coordinates = create_dataset(num_cities)
@@ -55,15 +76,28 @@ def main():
     # Apply k-means clustering
     clusters, kmeans_model = apply_kmeans(coordinates, n_clusters)
 
-    # Create a geometric graph
-    G = create_geometric_graph(num_cities, radius)
-
     # Visualize the clustering
     visualize_clusters(coordinates, clusters)
 
-    # Optionally, visualize the graph - uncomment the following lines if needed
-    pos = nx.get_node_attributes(G, 'pos')
-    nx.draw(G, pos, node_color=[G.nodes[data]['cluster'] for data in G.nodes], with_labels=True, cmap='viridis')
+    # Generate tours for each cluster
+    clustered_tours = {}
+    for cluster_id in range(n_clusters):
+        cluster_coordinates = coordinates[clusters == cluster_id]
+        tour = nearest_neighbor_tour(cluster_coordinates)
+        clustered_tours[cluster_id] = tour
+
+    # Connect the tours into a global tour and apply 2-opt
+    global_tour = connect_clusters(clustered_tours, coordinates)
+
+    # Visualize the global optimized tour
+    plt.figure(figsize=(10, 8))
+    global_tour_coords = coordinates[global_tour]
+    plt.plot(global_tour_coords[:, 0], global_tour_coords[:, 1], 'o-')
+    plt.title('Global Optimized Tour')
+    plt.xlabel('X Coordinate')
+    plt.ylabel('Y Coordinate')
+    plt.grid(True)
+    plt.show()
 
 if __name__ == "__main__":
     main()
